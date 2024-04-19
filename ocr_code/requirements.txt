@@ -1,0 +1,6 @@
+numpy
+opencv-python
+pdf2image
+matplotlib
+pillow==10.3.0
+pytesseract

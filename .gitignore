@@ -4,3 +4,5 @@ ocr_code/Screenshot*
 *.png
 chatbot/chatbot_env
 */.env
+*vectorstore/
+*__pycache__

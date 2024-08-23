@@ -1,20 +1,18 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from sentence_transformers import SentenceTransformer
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-# from langchain.prompts import ChatPromptTemplate
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
-from langchain_mistralai import ChatMistralAI
-from typing import Literal
-from langchain_core.pydantic_v1 import BaseModel, Field
-from langchain_core.runnables import RunnableLambda
-from langchain.chains import RetrievalQA
-import time 
+# from langchain.embeddings import HuggingFaceEmbeddings
+# from langchain.text_splitter import RecursiveCharacterTextSplitter
+# from langchain_community.vectorstores import Chroma
+# # from langchain.prompts import ChatPromptTemplate
+# from langchain_core.prompts import ChatPromptTemplate
+# from langchain_core.output_parsers import StrOutputParser
+# from langchain_core.runnables import RunnablePassthrough
+# from langchain_mistralai import ChatMistralAI
+# from typing import Literal
+# from langchain_core.pydantic_v1 import BaseModel, Field
+# from langchain_core.runnables import RunnableLambda
+# import time 
 import utils
 
 import warnings

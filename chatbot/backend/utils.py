@@ -1,4 +1,3 @@
-from sentence_transformers import SentenceTransformer
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
@@ -9,8 +8,6 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_mistralai import ChatMistralAI
 from typing import Literal
 from langchain_core.pydantic_v1 import BaseModel, Field
-from langchain_core.runnables import RunnableLambda
-from langchain.chains import RetrievalQA
 
 model_name = 'l3cube-pune/punjabi-sentence-similarity-sbert'
 embeddings = HuggingFaceEmbeddings(model_name=model_name)

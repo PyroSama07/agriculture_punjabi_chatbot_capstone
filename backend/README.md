@@ -16,10 +16,10 @@ to create secret key run= `openssl rand -hex 32` in your terminal.
 
 ## In code
 
-database used in code -> db_example
+- Database used in code -> db_example
 
-tables in database -> chat, users
+- Tables in database -> chat, users
 
-Structure of tables:
+- Structure of tables:
 
 ![Structure of tables](st.jpg)

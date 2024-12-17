@@ -21,3 +21,6 @@ def save_message(db:Session, msg: str, sender:bool, user_id:int):
 def get_all_messages_of_user(db: Session, user_id: int):
     return db.query(models.Message).filter(models.Message.user_id == user_id).order_by(models.Message.time_stamp)
 
+def delete_all_messages_of_user(db: Session, user_id: int):
+    db.query(models.Message).filter(models.Message.user_id == user_id).delete()
+    db.commit()

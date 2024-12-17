@@ -15,6 +15,14 @@ from schemas import UserInDB
 from database import SessionLocal, engine
 from sqlalchemy.orm import Session
 
+# CROS
+from fastapi.middleware.cors import CORSMiddleware
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:3000" # react url
+]
+
 #JWT
 # to create secret key run= openssl rand -hex 32
 SECRET_KEY = ""
@@ -41,6 +49,15 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+# CROS origin add
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
@@ -165,3 +182,7 @@ def get_responce_RAG(message=str):
 async def logout(token: Annotated[str, Depends(oauth2_scheme)]):
     add_token_to_blacklist(token)
     return {"msg": "Successfully logged out"}
+
+@app.delete("/delete_all_messages", status_code=204)
+def delete_all_messages(current_user: Annotated[User, Depends(get_current_active_user)], db: Session = Depends(get_db)):
+    return crud.delete_all_messages_of_user(db, user_id=current_user.id)

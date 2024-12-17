@@ -5,4 +5,4 @@ There are two pages:
 1. AuthPage page contains login and signup functionalities
 2. ChatBot page
 
-You can change .env file for API url.
+Change `.dotenv` to `.env` and you can change it for for API url.

@@ -1,17 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "../styling/ChatbotPage.css";
 
 function ChatbotPage({ onLogout }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const token = localStorage.getItem("token"); // Retrieve token from localStorage
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [userName, setUserName] = useState(""); // To store user's name
+  const token = localStorage.getItem("token");
+  const chatBoxRef = useRef(null);
 
   useEffect(() => {
+    fetchUserData();
     fetchMessages();
   }, []);
 
-  // Function to fetch messages
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_KEY}/users/me`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUserName(response.data.name);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      alert("Failed to fetch user data. Please log in again.");
+      onLogout(); // Log out the user if the request fails
+    }
+  };
+
   const fetchMessages = async () => {
     try {
       const response = await axios.get(
@@ -25,10 +50,11 @@ function ChatbotPage({ onLogout }) {
       setMessages(response.data);
     } catch (error) {
       console.error("Error fetching messages:", error);
+      alert("Error fetching messages, try login again");
+      onLogout(); // Log out the user if the request fails
     }
   };
 
-  // Function to send a new message
   const sendMessage = async () => {
     if (!newMessage.trim()) return;
     try {
@@ -41,14 +67,15 @@ function ChatbotPage({ onLogout }) {
           },
         }
       );
-      setNewMessage(""); // Clear the input field
-      fetchMessages(); // Refresh the messages
+      setNewMessage("");
+      fetchMessages();
     } catch (error) {
       console.error("Error sending message:", error);
+      alert("Error sending message, try login again");
+      onLogout(); // Log out the user if the request fails
     }
   };
 
-  // Function to delete all messages
   const deleteAllMessages = async () => {
     try {
       await axios.delete(
@@ -59,15 +86,15 @@ function ChatbotPage({ onLogout }) {
           },
         }
       );
-      setMessages([]); // Clear messages from state
+      setMessages([]);
       alert("All messages have been deleted successfully!");
     } catch (error) {
       console.error("Error deleting messages:", error);
-      alert("Failed to delete messages. Please try again.");
+      alert("Failed to delete messages, try login again.");
+      onLogout(); // Log out the user if the request fails
     }
   };
 
-  // Function to handle logout
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -79,19 +106,41 @@ function ChatbotPage({ onLogout }) {
           },
         }
       );
-      localStorage.removeItem("token"); // Remove token from localStorage
-      onLogout(); // Callback to handle logout logic
+      localStorage.removeItem("token");
+      onLogout();
     } catch (error) {
       console.error("Error during logout:", error);
+      alert("Error");
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }
   };
 
   return (
     <div className="chatbot-container">
-      <h1>Chatbot</h1>
-      <div className="chat-box">
+      <div
+        className="menu"
+        onMouseEnter={() => setMenuOpen(true)}
+        onMouseLeave={() => setMenuOpen(false)}
+      >
+        <span className="dots">•••</span>
+        {menuOpen && (
+          <div className="menu-options">
+            <p className="menu-user">Logged in as: {userName || "User"}</p>
+            <button onClick={deleteAllMessages}>Clear all messages</button>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        )}
+      </div>
+
+      <h1>PHAMA ਫਾਮਾ</h1>
+      <div className="chat-box" ref={chatBoxRef}>
         {messages.length > 0 ? (
-          messages.map((msg, index) => (
+          messages.map((msg) => (
             <div
               key={msg.id}
               className={`chat-message ${
@@ -105,29 +154,28 @@ function ChatbotPage({ onLogout }) {
             </div>
           ))
         ) : (
-          <p>No messages yet. Start the conversation!</p>
+          <p>
+            ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! {userName || "User"}, ਮੇਰਾ ਨਾਮ ਫਾਮਾ ਹੈ| ਤੁਸੀਂ ਮੈਨੂੰ
+            ਪੰਜਾਬ ਵਿੱਚ ਖੇਤੀਬਾੜੀ ਬਾਰੇ ਆਪਣੇ ਸਵਾਲ ਪੁੱਛ ਸਕਦੇ ਹੋ|
+            <br />
+            Hello {userName || "User"}, My name is PHAMA you can ask me any
+            questions about agriculture in Punjab.
+          </p>
         )}
-      </div>
-      <div className="input-area">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type a message..."
-        />
 
-        <button type="submit" onClick={sendMessage}>
-          Send
-        </button>
+        <div className="input-area">
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Type a message..."
+          />
 
-        <button className="delete-button" onClick={deleteAllMessages}>
-          Delete All Messages
-        </button>
+          <button onClick={sendMessage} className="send-button">
+            Send
+          </button>
+        </div>
       </div>
-      <button className="logout-button" onClick={handleLogout}>
-        Logout
-      </button>
-      \
     </div>
   );
 }

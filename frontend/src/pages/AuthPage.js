@@ -11,7 +11,7 @@ function AuthPage({ setAuthenticated }) {
     password: "",
   });
 
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate(); // Hook for navigation the chatbot page
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ function AuthPage({ setAuthenticated }) {
       if (isLogin) {
         // Login logic
         const loginData = new URLSearchParams();
-        loginData.append("username", formData.username);
+        loginData.append("username", formData.username.trim()); // trime user name of the additional spaces
         loginData.append("password", formData.password);
         const response = await axios.post(
           `${process.env.REACT_APP_API_KEY}/token`,
@@ -41,8 +41,8 @@ function AuthPage({ setAuthenticated }) {
       } else {
         // Signup logic
         const signupData = {
-          name: formData.name,
-          username: formData.username,
+          name: formData.name.trim(),
+          username: formData.username.trim(),
           hashed_password: formData.password,
         };
 
@@ -70,8 +70,9 @@ function AuthPage({ setAuthenticated }) {
 
   return (
     <div className="auth-container">
-      <h1>{isLogin ? "Login" : "Signup"}</h1>
       <form onSubmit={handleSubmit}>
+        <h1>{isLogin ? "PHAMA Login" : "PHAMA Sign Up"}</h1>
+
         {!isLogin && (
           <input
             type="text"
@@ -99,11 +100,15 @@ function AuthPage({ setAuthenticated }) {
           }
           required
         />
-        <button type="submit">{isLogin ? "Login" : "Signup"}</button>
+
+        <button className="login-button" type="submit">
+          {isLogin ? "Login" : "Signup"}
+        </button>
+
+        <button className="switch-button" onClick={() => setIsLogin(!isLogin)}>
+          {isLogin ? "Dont't have an account? Sign Up" : "or Login here"}
+        </button>
       </form>
-      <button className="switch-button" onClick={() => setIsLogin(!isLogin)}>
-        {isLogin ? "Switch to Signup" : "Switch to Login"}
-      </button>
     </div>
   );
 }

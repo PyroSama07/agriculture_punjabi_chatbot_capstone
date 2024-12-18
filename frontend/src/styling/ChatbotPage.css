@@ -1,138 +1,145 @@
-/* General Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  overflow: hidden;
-}
 
 .chatbot-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
-  background-color: #f9fafb;
+  align-items: center;
+  justify-content: center;
+  height: 93vh;
+  background: url('./bgimg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
 }
 
-h1 {
-  background-color: #202123;
-  color: #fff;
-  text-align: center;
-  padding: 15px 0;
-  font-size: 20px;
-  font-weight: 500;
+/* Menu styles */
+.menu {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
 }
 
-/* Chat Box - Scrollable Message Area */
-.chat-box {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
+.menu-user {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+
+.dots {
+  font-size: 2rem;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+}
+
+.menu-options {
+  position: absolute;
+  top: 2.5rem;
+  left: 0;
+  backdrop-filter: saturate(100%) blur(10px);
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  background-color: #fff;
+  z-index: 10;
 }
 
-/* User and Bot Messages */
-.chat-message {
-  max-width: 70%;
-  padding: 10px 15px;
+.menu-options button {
+  padding: 0.8rem 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.menu-options button:hover {
+  background-color: #ffffff82;
   border-radius: 10px;
-  line-height: 1.4;
+}
+
+/* Chatbox styles */
+.chat-box {
+  background-color: hsla(0, 0%, 100%, 0.8);
+  backdrop-filter: saturate(200%) blur(20px);
+  border-radius: 15px;
+  padding: 1.5rem;
+  width: 900px;
+  height: 600px;
+  overflow-y: auto;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Chat message styles */
+.chat-message {
+  /* margin-bottom: 1rem; */
+  padding: 0.8rem;
+  border-radius: 10px;
+  max-width: 75%;
   word-wrap: break-word;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .user-message {
-  background-color: #0084ff;
+  background-color: #be4fffc7;
   color: white;
   align-self: flex-end;
-  border-top-right-radius: 0;
 }
 
 .bot-message {
-  background-color: #e5e5ea;
-  color: #333;
+  background-color: #4c9292;
+  color: white;
   align-self: flex-start;
-  border-top-left-radius: 0;
 }
 
-/* Timestamp */
 .message-time {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
   display: block;
-  font-size: 10px;
-  color: #888;
-  margin-top: 5px;
+  margin-top: 0.2rem;
   text-align: right;
 }
 
-/* Input Area */
+/* Input area styles */
 .input-area {
   display: flex;
-  padding: 15px;
-  background-color: #f0f0f0;
-  border-top: 1px solid #ddd;
+  align-items: center;
+  width: 100%;
+  padding-top: 1rem;
 }
 
 .input-area input {
   flex: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-}
-
-.input-area button {
-  margin-left: 10px;
-  background-color: #59dbec;
-  color: rgb(0, 0, 0);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.input-area button:hover {
-  background-color: #76bdc6;
-}
-
-/* Logout Button */
-.logout-button {
-  align-self: center;
-  margin: 10px;
-  padding: 10px 20px;
-  background-color: #d9534f;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.logout-button:hover {
-  background-color: #c9302c;
-}
-
-/* Scrollbar Styling */
-.chat-box::-webkit-scrollbar {
-  width: 8px;
-}
-
-.chat-box::-webkit-scrollbar-thumb {
-  background-color: #ddd;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
   border-radius: 10px;
 }
 
-.chat-box::-webkit-scrollbar-thumb:hover {
-  background-color: #ccc;
+.send-button {
+  padding: 0.8rem;
+  margin-left: 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: cadetblue;
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: #ad1fffc7;
+}
+
+/* Title */
+.chatbot-container h1 {
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

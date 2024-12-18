@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 # data base url
-SQLALCHEMY_DATABASE_URL = "mysql://root:rootpassword@0.0.0.0:3306/phama_db"
+SQLALCHEMY_DATABASE_URL = "mysql://root:@localhost:3306/db_example"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL

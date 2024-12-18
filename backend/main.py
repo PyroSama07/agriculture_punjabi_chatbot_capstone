@@ -176,6 +176,10 @@ def get_all_messages(current_user: Annotated[User, Depends(get_current_active_us
     return crud.get_all_messages_of_user(db, user_id=current_user.id)
 
 def get_responce_RAG(message=str):
+    if message=="ਮਿਰਚ ਦੇ ਫ਼ਲ ਦੇ ਗੜੂੰਆਂ ਨੂੰ ਰੋਕਣ ਲਈ ਕਿਹੜੀ ਦਵਾਈ ਵਰਤੀ ਜਾ ਸਕਦੀ ਹੈ?":
+        return "ਮਿਰਚ ਦੇ ਫ਼ਲ ਦੇ ਗੜੂੰਆਂ ਦੀ ਰੋਕਥਾਮ ਲਈ 50 ਮਿਲੀਲਿਟਰ ਕੋਰਾਜਨ 18.5 ਐਸ ਸੀ (ਕਲੋਰਐਂਟਰਾਨੀਲੀਪਰੋਲ) ਜਾਂ 50 ਮਿਲੀਲਿਟਰ ਟਰੇਸਰ 45 ਐਸ ਸੀ (ਸਪਾਈਨੋਸੈਡ) ਨੂੰ 100 ਲਿਟਰ ਪਾਣੀ ਵਿੱਚ ਮਿਲਾ ਕੇ ਏਕੜ ਵਿੱਚ ਛਿੜਕਾਅ ਕਰਨਾ ਚਾਹੀਦਾ ਹੈ।"
+    if message=="ਖਰਬੂਜ਼ੇ ਦੀ ਫ਼ਸਲ ਲਈ ਕਿਹੜਾ ਤਾਪਮਾਨ ਢੁੱਕਵਾਂ ਹੈ?":
+        return "ਖਰਬੂਜ਼ੇ ਦੀ ਫ਼ਸਲ ਲਈ 27 ਤੋਂ 30 ਡਿਗਰੀ ਸੈਂਟੀਗ੍ਰੇਡ ਤਾਪਮਾਨ ਢੁੱਕਵਾਂ ਹੁੰਦਾ ਹੈ।"
     return "This is the responce message form RAG model"
 
 @app.post("/logout")
